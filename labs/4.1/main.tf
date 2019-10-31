@@ -48,6 +48,7 @@ data "azuread_user" "lab" {
   user_principal_name = "${var.user}"
 }
 
+
 resource "azurerm_key_vault" "lab" {
   name                = "state${random_id.lab.dec}vault"
   location            = "${data.azurerm_resource_group.lab.location}"

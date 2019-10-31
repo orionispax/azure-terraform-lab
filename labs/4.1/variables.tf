@@ -1,4 +1,4 @@
-# variable "user" {}
+variable "user" {}
 
 variable "subscription_id" {
     type = "string"
