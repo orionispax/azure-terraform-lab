@@ -1,13 +1,14 @@
 provider "azurerm" {
-  version = "1.22"
+  version = "1.36"
 }
 
 provider "random" {
-  version = "1.3"
+  version = "2.2.1"
 }
+
 resource "azurerm_resource_group" "lab" {
   name     = "lab-2-1"
-  location = "northeurope"
+  location = "eastus"
 }
 
 resource "random_id" "lab" {
@@ -47,6 +48,6 @@ resource "azurerm_function_app" "lab" {
   
   version = "~2"
 
-  app_settings {
+  app_settings = {
   }
 }
