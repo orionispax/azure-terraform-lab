@@ -1,13 +1,14 @@
 provider "azurerm" {
-  version = "1.22"
+  version = "1.36"
 }
 
 provider "random" {
-  version = "1.3"
+  version = "2.2.1"
 }
+
 resource "azurerm_resource_group" "lab" {
   name     = "lab-1-1"
-  location = "northeurope"
+  location = "eastus"
 }
 
 resource "random_id" "lab" {
@@ -16,4 +17,34 @@ resource "random_id" "lab" {
   }
 
   byte_length = 2
+}
+
+resource "azurerm_app_service_plan" "lab" {
+  name                = "lab-plan"
+  location            = "${azurerm_resource_group.lab.location}"
+  resource_group_name = "${azurerm_resource_group.lab.name}"
+  kind                = "FunctionApp"
+
+  sku {
+    tier = "Dynamic"
+    size = "Y1"
+  }
+}
+
+resource "azurerm_storage_account" "lab" {
+  name                      = "lab${random_id.lab.dec}store"
+  resource_group_name       = "${azurerm_resource_group.lab.name}"
+  location                  = "${azurerm_resource_group.lab.location}"
+  account_tier              = "Standard"
+  account_replication_type  = "LRS"
+}
+
+resource "azurerm_function_app" "lab" {
+  name                      = "lab${random_id.lab.dec}"
+  location                  = "${azurerm_resource_group.lab.location}"
+  resource_group_name       = "${azurerm_resource_group.lab.name}"
+  app_service_plan_id       = "${azurerm_app_service_plan.lab.id}"
+  storage_connection_string = "${azurerm_storage_account.lab.primary_connection_string}"
+
+  version = "~2"
 }
