@@ -1,14 +1,18 @@
 provider "azurerm" {
-  version = "1.23"
+  version = "1.36"
+  subscription_id = "${var.subscription_id}"
+  client_id = "${var.client_id}"
+  client_secret = "${var.client_secret}"
+  tenant_id="${var.tenant_id}"
 }
 
 provider "azuread" {
-  version = "0.2"
+  version = "~>0.3.1"
 }
 
 
 provider "random" {
-  version = "1.3"
+  version = "2.2.1"
 }
 
 data "azurerm_resource_group" "lab" {
