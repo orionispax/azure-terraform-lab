@@ -1,13 +1,15 @@
 provider "azurerm" {
-  version = "1.22"
+  version = "1.36"
 }
 
 provider "random" {
-  version = "1.3"
+  version = "2.2.1"
 }
+
+
 resource "azurerm_resource_group" "lab" {
   name     = "lab-1-2"
-  location = "northeurope"
+  location = "eastus"
 }
 
 resource "random_id" "lab" {
@@ -44,6 +46,11 @@ resource "azurerm_function_app" "lab" {
   resource_group_name       = "${azurerm_resource_group.lab.name}"
   app_service_plan_id       = "${azurerm_app_service_plan.lab.id}"
   storage_connection_string = "${azurerm_storage_account.lab.primary_connection_string}"
-  
+
+  app_settings              = { 
+                                ABC = "XYZ"
+                              }
+
   version = "~2"
+
 }
