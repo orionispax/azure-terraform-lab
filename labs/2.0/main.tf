@@ -1,9 +1,9 @@
 provider "azurerm" {
-  version = "1.36"
+  version = "~>1.36"
 }
 
 provider "random" {
-  version = "2.2.1"
+  version = "~>2.2.1"
 }
 variable "sku-tier" {
   type = "string"
